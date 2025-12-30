@@ -1,0 +1,95 @@
+<!-- ==========================================
+     DASHBOARD PAGE - User Account Overview
+     File: templates/dashboard.html
+     Purpose: User's personal dashboard with search history
+     ========================================== -->
+
+<!-- Extend the base template -->
+{% extends "base.html" %}
+
+<!-- ========== PAGE TITLE ========== -->
+{% block title %}Dashboard - Transport Platform{% endblock %}
+
+<!-- ========== PAGE CONTENT ========== -->
+{% block content %}
+
+<!-- ========== DASHBOARD CONTAINER ========== -->
+<!-- Main dashboard wrapper -->
+<div class="dashboard-container">
+    
+    <!-- ========== DASHBOARD HEADER ========== -->
+    <!-- Welcome message with user's email -->
+    <div class="dashboard-header">
+        <h1>Welcome, {{ session.email }}!</h1>
+        <p>Your transportation dashboard</p>
+    </div>
+
+    <!-- ========== DASHBOARD ACTIONS ========== -->
+    <!-- Quick action buttons -->
+    <div class="dashboard-actions">
+        <a href="{{ url_for('search') }}" class="btn btn-primary">
+            <i class="fas fa-search"></i> <!-- Search icon -->
+            New Search
+        </a>
+    </div>
+
+    <!-- ========== DASHBOARD CONTENT ========== -->
+    <!-- Main content area with cards -->
+    <div class="dashboard-content">
+        
+        <!-- ========== RECENT SEARCHES CARD ========== -->
+        <div class="card">
+            
+            <!-- Card Header -->
+            <div class="card-header">
+                <h3>Recent Searches</h3>
+            </div>
+            
+            <!-- Card Body -->
+            <div class="card-body">
+                
+                <!-- Check if user has search history -->
+                {% if recent_searches %}
+                    
+                    <!-- ========== SEARCH HISTORY LIST ========== -->
+                    <div class="search-history">
+                        
+                        <!-- Loop through each search record -->
+                        {% for search in recent_searches %}
+                            <div class="search-item">
+                                
+                                <!-- Search route information -->
+                                <div class="search-route">
+                                    <i class="fas fa-map-marker-alt"></i> <!-- Location icon -->
+                                    <span>{{ search[0] }} → {{ search[1] }}</span>
+                                </div>
+                                
+                                <!-- Search details (budget and date) -->
+                                <div class="search-details">
+                                    <span class="budget">${{ search[2] }} budget</span>
+                                    <span class="date">{{ search[3] }}</span>
+                                </div>
+                                
+                            </div>
+                        {% endfor %}
+                        
+                    </div>
+                    
+                {% else %}
+                    
+                    <!-- ========== NO SEARCHES MESSAGE ========== -->
+                    <!-- Message when user has no search history -->
+                    <p class="no-data">
+                        No recent searches yet. 
+                        <a href="{{ url_for('search') }}">Start your first search!</a>
+                    </p>
+                    
+                {% endif %}
+                
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}

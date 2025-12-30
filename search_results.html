@@ -1,0 +1,187 @@
+<!-- ==========================================
+     SEARCH RESULTS PAGE - Transport Options Display
+     File: templates/search_results.html
+     Purpose: Display search results with transport options
+     ========================================== -->
+
+<!-- Extend the base template -->
+{% extends "base.html" %}
+
+<!-- ========== PAGE TITLE ========== -->
+{% block title %}Search Results - Transport Platform{% endblock %}
+
+<!-- ========== PAGE CONTENT ========== -->
+{% block content %}
+
+<!-- ========== RESULTS CONTAINER ========== -->
+<!-- Main results page wrapper -->
+<div class="results-container">
+    
+    <!-- ========== RESULTS HEADER ========== -->
+    <!-- Page title and search summary -->
+    <div class="results-header">
+        <h1>Transport Options</h1>
+        
+        <!-- Display search parameters -->
+        <div class="route-info">
+            <span class="route">
+                <i class="fas fa-map-marker-alt"></i> <!-- Location icon -->
+                {{ from_location }} → {{ to_location }}
+            </span>
+            <span class="budget">Budget: ${{ budget }}</span>
+        </div>
+    </div>
+
+    <!-- ========== SEARCH RESULTS SECTION ========== -->
+    <!-- Check if any transport options were found -->
+    {% if results.options %}
+        
+        <!-- ========== RESULTS GRID ========== -->
+        <!-- Grid layout for transport option cards -->
+        <div class="results-grid">
+            
+            <!-- Loop through each transport option -->
+            {% for option in results.options %}
+                
+                <!-- ========== TRANSPORT OPTION CARD ========== -->
+                <div class="transport-card">
+                    
+                    <!-- ========== CARD HEADER ========== -->
+                    <!-- Provider info and price -->
+                    <div class="transport-header">
+                        
+                        <!-- Provider information -->
+                        <div class="provider-info">
+                            <i class="fas fa-{{ option.icon }}"></i> <!-- Transport type icon -->
+                            <div>
+                                <h3>{{ option.provider }}</h3> <!-- Provider name (Uber, Lyft, etc.) -->
+                                <p class="transport-type">{{ option.type }}</p> <!-- Service type -->
+                            </div>
+                        </div>
+                        
+                        <!-- Price display -->
+                        <div class="price">
+                            <span class="amount">${{ "%.2f"|format(option.price) }}</span>
+                        </div>
+                        
+                    </div>
+                    
+                    <!-- ========== CARD DETAILS ========== -->
+                    <!-- Additional information about the transport option -->
+                    <div class="transport-details">
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i> <!-- Clock icon -->
+                            <span>{{ option.duration }} minutes</span>
+                        </div>
+                    </div>
+                    
+                    <!-- ========== CARD ACTIONS ========== -->
+                    <!-- Booking button -->
+                    <div class="transport-actions">
+                        <a href="{{ url_for('book_transport', provider=option.provider, transport_type=option.type) }}" 
+                           class="btn btn-success btn-full">
+                            <i class="fas fa-ticket-alt"></i> <!-- Ticket icon -->
+                            Book Now
+                        </a>
+                    </div>
+                    
+                </div>
+                
+            {% endfor %}
+            
+        </div>
+        
+        <!-- ========== RESULTS ACTIONS ========== -->
+        <!-- Action buttons after results -->
+        <div class="results-actions">
+            <a href="{{ url_for('search') }}" class="btn btn-secondary">
+                <i class="fas fa-search"></i> <!-- Search icon -->
+                New Search
+            </a>
+        </div>
+        
+    {% else %}
+        
+        <!-- ========== NO RESULTS SECTION ========== -->
+        <!-- Display when no transport options are found -->
+        <div class="no-results">
+            <i class="fas fa-exclamation-circle"></i> <!-- Warning icon -->
+            <h3>No Options Found</h3>
+            <p>No transport options found within your budget of ${{ budget }}.</p>
+            <p>Try increasing your budget or checking different locations.</p>
+            <a href="{{ url_for('search') }}" class="btn btn-primary">Try Again</a>
+        </div>
+        
+    {% endif %}
+    
+</div>
+
+{% endblock %}{% extends "base.html" %}
+
+{% block title %}Search Results - Transport Platform{% endblock %}
+
+{% block content %}
+<div class="results-container">
+    <div class="results-header">
+        <h1>Transport Options</h1>
+        <div class="route-info">
+            <span class="route">
+                <i class="fas fa-map-marker-alt"></i>
+                {{ from_location }} → {{ to_location }}
+            </span>
+            <span class="budget">Budget: ${{ budget }}</span>
+        </div>
+    </div>
+
+    {% if results.options %}
+        <div class="results-grid">
+            {% for option in results.options %}
+                <div class="transport-card">
+                    <div class="transport-header">
+                        <div class="provider-info">
+                            <i class="fas fa-{{ option.icon }}"></i>
+                            <div>
+                                <h3>{{ option.provider }}</h3>
+                                <p class="transport-type">{{ option.type }}</p>
+                            </div>
+                        </div>
+                        <div class="price">
+                            <span class="amount">${{ "%.2f"|format(option.price) }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-details">
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <span>{{ option.duration }} minutes</span>
+                        </div>
+                    </div>
+                    
+                    <div class="transport-actions">
+                        <a href="{{ url_for('book_transport', provider=option.provider, transport_type=option.type) }}" 
+                           class="btn btn-success btn-full">
+                            <i class="fas fa-ticket-alt"></i>
+                            Book Now
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="results-actions">
+            <a href="{{ url_for('search') }}" class="btn btn-secondary">
+                <i class="fas fa-search"></i>
+                New Search
+            </a>
+        </div>
+    {% else %}
+        <div class="no-results">
+            <i class="fas fa-exclamation-circle"></i>
+            <h3>No Options Found</h3>
+            <p>No transport options found within your budget of ${{ budget }}.</p>
+            <p>Try increasing your budget or checking different locations.</p>
+            <a href="{{ url_for('search') }}" class="btn btn-primary">Try Again</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

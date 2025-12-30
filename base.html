@@ -1,0 +1,89 @@
+<!-- ==========================================
+     BASE TEMPLATE - Main Layout Structure
+     File: templates/base.html
+     Purpose: Common layout for all pages (header, nav, footer)
+     ========================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- ========== HEAD SECTION ========== -->
+<head>
+    <!-- Meta tags for responsive design and character encoding -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Dynamic page title using Jinja2 template blocks -->
+    <title>{% block title %}Transport Platform{% endblock %}</title>
+    
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Font Awesome icons for UI elements -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<!-- ========== BODY SECTION ========== -->
+<body>
+    
+    <!-- ========== NAVIGATION BAR ========== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            
+            <!-- Brand/Logo Section -->
+            <div class="nav-brand">
+                <a href="{{ url_for('index') }}">
+                    <i class="fas fa-route"></i> <!-- Route icon -->
+                    TransportHub
+                </a>
+            </div>
+            
+            <!-- Navigation Links - Changes based on user login status -->
+            <div class="nav-links">
+                {% if session.user_id %} <!-- If user is logged in -->
+                    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                    <a href="{{ url_for('search') }}">Search</a>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                {% else %} <!-- If user is not logged in -->
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('register') }}">Register</a>
+                {% endif %}
+            </div>
+            
+        </div>
+    </nav>
+
+    <!-- ========== MAIN CONTENT AREA ========== -->
+    <main class="main-content">
+        
+        <!-- Flash Messages Display (Success/Error messages) -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert-container">
+                    {% for message in messages %}
+                        <div class="alert alert-info">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Content Block - Individual pages insert content here -->
+        {% block content %}{% endblock %}
+        
+    </main>
+
+    <!-- ========== FOOTER SECTION ========== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 TransportHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ========== JAVASCRIPT FILES ========== -->
+    <!-- Main JavaScript file -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    
+    <!-- Additional scripts block for page-specific JavaScript -->
+    {% block scripts %}{% endblock %}
+    
+</body>
+</html>

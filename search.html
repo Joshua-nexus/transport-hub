@@ -1,0 +1,119 @@
+<!-- ==========================================
+     SEARCH PAGE - Transport Search Form
+     File: templates/search.html
+     Purpose: Main search interface for finding transport options
+     ========================================== -->
+
+<!-- Extend the base template -->
+{% extends "base.html" %}
+
+<!-- ========== PAGE TITLE ========== -->
+{% block title %}Search Transport - Transport Platform{% endblock %}
+
+<!-- ========== PAGE CONTENT ========== -->
+{% block content %}
+
+<!-- ========== SEARCH CONTAINER ========== -->
+<!-- Main search page wrapper -->
+<div class="search-container">
+    
+    <!-- ========== SEARCH HEADER ========== -->
+    <!-- Page title and description -->
+    <div class="search-header">
+        <h1>Find Your Transport</h1>
+        <p>Compare prices and book your ride</p>
+    </div>
+
+    <!-- ========== SEARCH FORM CONTAINER ========== -->
+    <!-- Container for the main search form -->
+    <div class="search-form-container">
+        
+        <!-- ========== SEARCH FORM ========== -->
+        <!-- Form submits to same route with POST method -->
+        <form method="POST" class="search-form" id="searchForm">
+            
+            <!-- Form fields in a responsive row layout -->
+            <div class="form-row">
+                
+                <!-- ========== FROM LOCATION FIELD ========== -->
+                <div class="form-group">
+                    <label for="from_location">From</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-map-marker-alt"></i> <!-- Location pin icon -->
+                        <input type="text" 
+                               id="from_location" 
+                               name="from_location" 
+                               placeholder="Enter pickup location" 
+                               required>
+                    </div>
+                </div>
+
+                <!-- ========== TO LOCATION FIELD ========== -->
+                <div class="form-group">
+                    <label for="to_location">To</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-flag-checkered"></i> <!-- Destination flag icon -->
+                        <input type="text" 
+                               id="to_location" 
+                               name="to_location" 
+                               placeholder="Enter destination" 
+                               required>
+                    </div>
+                </div>
+
+                <!-- ========== BUDGET FIELD ========== -->
+                <div class="form-group">
+                    <label for="budget">Budget ($)</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-dollar-sign"></i> <!-- Dollar sign icon -->
+                        <input type="number" 
+                               id="budget" 
+                               name="budget" 
+                               value="50" 
+                               min="1" 
+                               max="1000" 
+                               required>
+                    </div>
+                </div>
+
+                <!-- ========== SEARCH BUTTON ========== -->
+                <div class="form-group">
+                    <label>&nbsp;</label> <!-- Empty label for alignment -->
+                    <button type="submit" class="btn btn-primary" id="searchBtn">
+                        <i class="fas fa-search"></i> <!-- Search icon -->
+                        Search
+                    </button>
+                </div>
+                
+            </div>
+        </form>
+        
+    </div>
+
+    <!-- ========== SEARCH RESULTS AREA ========== -->
+    <!-- Initially hidden, shows when search is performed -->
+    <div id="searchResults" class="search-results" style="display: none;">
+        
+        <!-- Loading spinner while searching -->
+        <div class="loading" id="loadingSpinner">
+            <i class="fas fa-spinner fa-spin"></i> <!-- Spinning icon -->
+            <p>Searching for transport options...</p>
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}
+
+<!-- ========== PAGE-SPECIFIC JAVASCRIPT ========== -->
+{% block scripts %}
+<script>
+// Add loading state when form is submitted
+document.getElementById('searchForm').addEventListener('submit', function(e) {
+    // Show the results area
+    document.getElementById('searchResults').style.display = 'block';
+    // Show the loading spinner
+    document.getElementById('loadingSpinner').style.display = 'block';
+});
+</script>
+{% endblock %}

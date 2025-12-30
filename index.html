@@ -1,0 +1,84 @@
+<!-- ==========================================
+     HOME PAGE - Landing/Welcome Page
+     File: templates/index.html
+     Purpose: Main landing page with hero section and features
+     ========================================== -->
+
+<!-- Extend the base template -->
+{% extends "base.html" %}
+
+<!-- ========== PAGE TITLE ========== -->
+{% block title %}Home - Transport Platform{% endblock %}
+
+<!-- ========== PAGE CONTENT ========== -->
+{% block content %}
+
+<!-- ========== HERO SECTION ========== -->
+<!-- Main banner with call-to-action -->
+<div class="hero-section">
+    <div class="hero-content">
+        
+        <!-- Main heading -->
+        <h1>Find Your Perfect Ride</h1>
+        
+        <!-- Subtitle/description -->
+        <p>Compare prices from Uber, Lyft, public transit, and more - all in one place</p>
+        
+        <!-- Action buttons - different based on login status -->
+        <div class="hero-actions">
+            {% if session.user_id %} <!-- Logged in users -->
+                <a href="{{ url_for('search') }}" class="btn btn-primary">Start Searching</a>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Go to Dashboard</a>
+            {% else %} <!-- Not logged in users -->
+                <a href="{{ url_for('register') }}" class="btn btn-primary">Get Started</a>
+                <a href="{{ url_for('login') }}" class="btn btn-secondary">Login</a>
+            {% endif %}
+        </div>
+        
+    </div>
+</div>
+
+<!-- ========== FEATURES SECTION ========== -->
+<!-- Showcase of platform benefits -->
+<div class="features-section">
+    <div class="container">
+        
+        <!-- Section heading -->
+        <h2>Why Choose TransportHub?</h2>
+        
+        <!-- Features grid layout -->
+        <div class="features-grid">
+            
+            <!-- Feature 1: Budget-Friendly -->
+            <div class="feature-card">
+                <i class="fas fa-dollar-sign"></i> <!-- Dollar icon -->
+                <h3>Budget-Friendly</h3>
+                <p>Set your budget and find options that fit your wallet</p>
+            </div>
+            
+            <!-- Feature 2: Real-Time Prices -->
+            <div class="feature-card">
+                <i class="fas fa-clock"></i> <!-- Clock icon -->
+                <h3>Real-Time Prices</h3>
+                <p>Get up-to-date pricing from all major transport services</p>
+            </div>
+            
+            <!-- Feature 3: Multiple Options -->
+            <div class="feature-card">
+                <i class="fas fa-map-marked-alt"></i> <!-- Map icon -->
+                <h3>Multiple Options</h3>
+                <p>Compare Uber, Lyft, public transit, and local taxis</p>
+            </div>
+            
+            <!-- Feature 4: User Reviews -->
+            <div class="feature-card">
+                <i class="fas fa-star"></i> <!-- Star icon -->
+                <h3>User Reviews</h3>
+                <p>Read reviews and ratings from other travelers</p>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

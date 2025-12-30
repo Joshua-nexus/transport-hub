@@ -1,0 +1,81 @@
+<!-- ==========================================
+     REGISTRATION PAGE - New User Signup
+     File: templates/register.html
+     Purpose: User registration form for new accounts
+     ========================================== -->
+
+<!-- Extend the base template -->
+{% extends "base.html" %}
+
+<!-- ========== PAGE TITLE ========== -->
+{% block title %}Register - Transport Platform{% endblock %}
+
+<!-- ========== PAGE CONTENT ========== -->
+{% block content %}
+
+<!-- ========== AUTHENTICATION CONTAINER ========== -->
+<!-- Centered registration form container -->
+<div class="auth-container">
+    <div class="auth-card">
+        
+        <!-- ========== REGISTRATION HEADER ========== -->
+        <!-- Welcome message for new users -->
+        <div class="auth-header">
+            <h2>Create Account</h2>
+            <p>Join TransportHub today</p>
+        </div>
+        
+        <!-- ========== REGISTRATION FORM ========== -->
+        <!-- Form submits to same route with POST method -->
+        <form method="POST" class="auth-form">
+            
+            <!-- Email Input Field -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" 
+                       id="email" 
+                       name="email" 
+                       required 
+                       placeholder="Enter your email">
+            </div>
+            
+            <!-- Password Input Field -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" 
+                       id="password" 
+                       name="password" 
+                       required 
+                       placeholder="Create a password" 
+                       minlength="6">
+            </div>
+            
+            <!-- Budget Preference Input Field -->
+            <div class="form-group">
+                <label for="budget_preference">Default Budget ($)</label>
+                <input type="number" 
+                       id="budget_preference" 
+                       name="budget_preference" 
+                       value="50" 
+                       min="1" 
+                       max="1000" 
+                       placeholder="Your typical budget">
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary btn-full">Create Account</button>
+            
+        </form>
+        
+        <!-- ========== LOGIN LINK ========== -->
+        <!-- Link to login page for existing users -->
+        <div class="auth-footer">
+            <p>Already have an account? 
+               <a href="{{ url_for('login') }}">Sign in here</a>
+            </p>
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}
